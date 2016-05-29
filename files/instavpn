@@ -73,7 +73,7 @@ class IO:
 
         with open('/etc/ppp/chap-secrets', 'w') as f:
             for username in self.users:
-                f.write(username + ' l2tpd ' + self.users[username] + ' *\n')
+                f.write(username + ' * ' + self.users[username] + ' *\n')
             f.truncate()
 
         self.__restart()
@@ -99,7 +99,7 @@ class Util:
 
     @staticmethod
     def __regex_check(string):
-        regexp = re.compile("^([a-zA-Z]|\d){6,32}$")
+        regexp = re.compile("^([a-zA-Z]|\d){4,32}$")
         return re.match(regexp, string) is not None
 
     def psk_get(self):
@@ -110,7 +110,7 @@ class Util:
             self.__io.psk = self.__args.key
             self.__io.save()
         else:
-            print 'All fields must contain alphanumeric characters only and have length between 6 and 32'
+            print 'All fields must contain alphanumeric characters only and have length between 4 and 32'
 
 
     def user_get(self):
@@ -124,7 +124,7 @@ class Util:
             self.__io.users[self.__args.username] = self.__args.password
             self.__io.save()
         else:
-            print 'All fields must contain alphanumeric characters only and have length between 6 and 32'
+            print 'All fields must contain alphanumeric characters only and have length between 4 and 32'
 
     def user_delete(self):
         if self.__io.users.has_key(self.__args.username):
@@ -178,7 +178,7 @@ class Util:
                 f.write(json.dumps(json_data))
                 f.truncate()
         else:
-            print 'All fields must contain alphanumeric characters only and have length between 6 and 32'
+            print 'All fields must contain alphanumeric characters only and have length between 4 and 32'
 
     @staticmethod
     def stat():
